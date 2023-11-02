@@ -1,19 +1,25 @@
 const connectToMongo = require("./db");
 const express = require("express");
 const cors = require("cors");
+const authRoute =require("./routes/auth.js");
+const usersRoute =require("./routes/users.js");
+const guesthousesRoute =require("./routes/guesthouses.js");
+const roomsRoute =require("./routes/rooms.js");
 connectToMongo();
 const app = express();
 const port = 5000;
 
+
+
 app.use(cors());
-//middleware to use req.body in aut
+
 app.use(express.json());
 
-//available routes
-//app.use("/api/auth", require("./routes/auth"));
-//app.use("/api/article", require("./routes/article"));
-
-//Available routes
+//middlewares
+app.use("/auth",authRoute);
+app.use("/guesthouses",guesthousesRoute);
+app.use("/rooms",roomsRoute);
+app.use("/users",usersRoute);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

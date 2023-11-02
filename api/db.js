@@ -12,4 +12,10 @@ const connectToMongo = () => {
     });
 };
 
+mongoose.connection.on("disconnected",()=>{
+  console.log("MongoDb disconnected");
+})
+mongoose.connection.on("connected",()=>{
+  console.log("MongoDb connected");
+})
 module.exports = connectToMongo;
