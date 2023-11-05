@@ -1,5 +1,5 @@
 const express = require("express");
-const { createGH,updateGH,deleteGH,getAllGH,getGH} = require("../controllers/guesthouses");
+const { createGH,updateGH,deleteGH,getAllGH,getGH,countByCity,countByType} = require("../controllers/guesthouses");
 const { verifyAdmin } = require("../utils/verifyToken");
 
 const router=express.Router();
@@ -14,9 +14,14 @@ router.put("/:id",verifyAdmin,updateGH);
 router.delete("/:id",verifyAdmin,deleteGH);
 
 //GET
-router.get("/:id",getGH);
+router.get("/find/:id",getGH);
 
 //GET ALL
 router.get("/",getAllGH);
 
+//GET ALL
+router.get("/countByCity",countByCity);
+
+//GET ALL
+router.get("/countByType",countByType);
 module.exports = router; 
