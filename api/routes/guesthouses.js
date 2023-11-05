@@ -1,16 +1,17 @@
 const express = require("express");
 const { createGH,updateGH,deleteGH,getAllGH,getGH} = require("../controllers/guesthouses");
+const { verifyAdmin } = require("../utils/verifyToken");
 
 const router=express.Router();
 
 //CREATE
-router.post("/",createGH);
+router.post("/",verifyAdmin ,createGH);
 
 //UPDATE
-router.put("/:id",updateGH);
+router.put("/:id",verifyAdmin,updateGH);
 
 //DELETE
-router.delete("/:id",deleteGH);
+router.delete("/:id",verifyAdmin,deleteGH);
 
 //GET
 router.get("/:id",getGH);
