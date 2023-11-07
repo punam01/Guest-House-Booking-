@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-/*import { loginFailed, loginStart, loginSuccess } from '../../context api/Context';
-import './login.css';/* */
+/*import { loginFailed, loginStart, loginSuccess } from '../../context api/Context';*/
+import './login.css';
 import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
     username: undefined,
     password: undefined,
   });
-  const {user, loading, error, dispatch } = useContext(AuthContext);
+  const {loading, error, dispatch } = useContext(AuthContext);
 
   /*const dispatch = useDispatch();
   const err = useSelector((state) => state.search.error);*/
@@ -26,17 +26,17 @@ const Login = () => {
       const res = await axios.post("/auth/login", credentials);
       dispatch({type:"LOGIN_SUCCESS",payload:res.data});
       navigate("/");
-      document.location.reload();
+      //document.location.reload();
+       // console.log(user);
     } catch (error) {
       dispatch({type:"LOGIN_FAILURE",payload:error.response.data});
     }
   }
-  console.log(user);
   return (
     <div className="main-login">
       <div className="login">
         <div className="left-login">
-          <img src="" alt="..." />
+          {false && <img src="" alt="..." />}
         </div>
         <div className="right-login">
           <h2>Sign in or create an account</h2>
@@ -55,6 +55,7 @@ const Login = () => {
             onChange={handleChange}
           />
           <button
+          disabled={loading}
             type="submit"
             style={{ width: "18rem", margin: "0" }}
             className="btn"

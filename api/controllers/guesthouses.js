@@ -1,4 +1,5 @@
 const GH = require("../models/GuestHouse");
+const Room = require("../models/Room");
 
 const createGH = async (req, res, next) => {
   const newGH = new GH(req.body);
@@ -46,7 +47,7 @@ const getAllGH = async (req, res, next) => {
   try {
     const guesthouses = await GH.find({
       ...others,
-      cheapestPrice: { $gt: min || 1, $lt: max || 999 }
+      cheapestPrice: { $gt: min || 0, $lt: max || 999 }
     }).limit(req.query.limit);
     res.status(200).json(guesthouses);
   } catch (err) {
@@ -80,6 +81,18 @@ const countByType = async (req, res, next) => {
   }
 };
 
+const getGHRooms=async(req,res,next)=>{
+  try{
+    const guesthouse=await GH.findById(req.params.id);
+    const list=await Promise.all(guesthouse.rooms.map(room=>{
+      return Room.findById(room);
+    }))
+    res.status(200).json(list);
+  }
+  catch(err){
+    next(err);
+  }
+}
 module.exports = {
   createGH,
   updateGH,
@@ -88,4 +101,5 @@ module.exports = {
   getAllGH,
   countByCity,
   countByType,
+  getGHRooms
 };

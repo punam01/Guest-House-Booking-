@@ -1,0 +1,64 @@
+.reserve{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(24 25 25 / 60%);
+    font-family: 'Merriweather', serif;
+    text-transform: capitalize;
+}
+.rContainer{
+    background-color: white;
+    padding: 20px;
+    position: relative;
+}
+.noRoom{
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    font-size: 20px;
+}
+.rItem{
+    display: flex;
+    gap: 40px;
+    margin: 23px 0;
+    line-height: 20px;
+}
+.rItemInfo{
+    flex: 3;
+}
+.rNumber{
+    flex: 1;
+}
+.rClose{
+    top: 9px;
+    position: absolute;
+    right: 14px;
+    font-size: 25px;
+    cursor: pointer;
+}
+.noRoomClose{
+    top: 0.9px;
+    position: absolute;
+    right: 1.2px;
+    font-size: 25px;
+    cursor: pointer;
+}
+.rBtn{
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+    color: white;
+    background-color: #2146C7;
+}
+.rBtn:hover{
+    cursor: pointer;
+    background-color: #2e51ca;
+}
+label{
+    font-weight: lighter;
+}
