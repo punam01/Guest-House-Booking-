@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /*import { loginFailed, loginStart, loginSuccess } from '../../context api/Context';
 import './login.css';/* */
-import LoginImg from "../../assets/Login.png";
 import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
@@ -38,7 +36,7 @@ const Login = () => {
     <div className="main-login">
       <div className="login">
         <div className="left-login">
-          <img src={LoginImg} alt="..." />
+          <img src="" alt="..." />
         </div>
         <div className="right-login">
           <h2>Sign in or create an account</h2>
