@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
       <Link to="/" style={{color:"white",textDecoration:"none"}}>
-        <span className="logo">lamabooking</span>
+        <span className="logo">NITK GUEST HOUSE</span>
       </Link>        
         {user?user.username : <div className="navItems">
           <button className="navButton">Register</button>
