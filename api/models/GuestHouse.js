@@ -42,7 +42,6 @@ const GuestHouseSchema=new mongoose.Schema({
     },
     cheapestPrice:{
         type:Number,
-        required:true
     },
     featured:{
         type:Boolean,
