@@ -133,7 +133,7 @@ const Hotel = () => {
               <h2>
                 <b>${days*data.cheapestPrice*options.room}</b> ({days} nights)
               </h2>
-              <button onClick={handleClick}>Reserve or Book Now!</button>
+              <button style={{backgroundColor:"#ADE792",color:"#344D67"}} onClick={handleClick}>Reserve or Book Now!</button>
             </div>
           </div>
         </div>

@@ -20,8 +20,8 @@
   right: 0;
   border: none;
   padding: 10px 20px;
-  background-color: #0071c2;
-  color: white;
+  background-color: #ADE792;
+  color: #344D67;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
@@ -39,12 +39,12 @@
 }
 
 .hotelDistance {
-  color: #0071c2;
+  color: #344D67;
   font-weight: 500;
 }
 
 .hotelPriceHighlight {
-  color: #008009;
+  color: #ADE792;
   font-weight: 500;
 }
 
@@ -82,8 +82,9 @@
 
 .hotelDetailsPrice {
   flex: 1;
-  background-color: #ebf3ff;
+  background-color: #344D67;
   padding: 20px;
+  color:white;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -91,7 +92,7 @@
 
 .hotelDetailsPrice > h1 {
   font-size: 18px;
-  color: #555;
+  color: white;
 }
 .hotelDetailsPrice > span {
   font-size: 14px;
@@ -102,7 +103,7 @@
 .hotelDetailsPrice > button {
   border: none;
   padding: 10px 20px;
-  background-color: #0071c2;
+  background-color: #344D67;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -119,6 +120,7 @@
   z-index: 999;
   display: flex;
   align-items: center;
+  
 }
 
 .sliderWrapper{
@@ -131,7 +133,9 @@
 
 .sliderImg{
   width: 80%;
-  height: 80vh;
+
+  background-color: aqua;
+  height: 400px;
 }
 
 .close{

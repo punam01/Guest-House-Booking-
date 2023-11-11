@@ -53,11 +53,11 @@
     padding: 8px 0;
     border: none;
     color: white;
-    background-color: #2146C7;
+    background-color: #ADE792;
 }
 .rBtn:hover{
     cursor: pointer;
-    background-color: #2e51ca;
+    background-color: #92e79d;
 }
 label{
     font-weight: lighter;
