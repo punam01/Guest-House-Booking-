@@ -46,8 +46,10 @@ const GuestHouseSchema=new mongoose.Schema({
     featured:{
         type:Boolean,
         default:false
+    },
+    aminities:{
+        type:String,
     }
-
 })
 
 module.exports = mongoose.model("GuestHouse",GuestHouseSchema); 

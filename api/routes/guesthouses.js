@@ -1,5 +1,5 @@
 const express = require("express");
-const { createGH,updateGH,deleteGH,getAllGH,getGH,countByCity,countByType, getGHRooms} = require("../controllers/guesthouses");
+const { createGH,updateGH,deleteGH,getAllGH,getGH,countByCity,countByType, getGHRooms, countByAminities, getGHByAminity} = require("../controllers/guesthouses");
 const { verifyAdmin } = require("../utils/verifyToken");
 
 const router=express.Router();
@@ -21,7 +21,7 @@ router.get("/",getAllGH);
 
 //GET ALL
 router.get("/countByCity",countByCity);
-
+router.get("/byAminity", getGHByAminity);
 //GET ALL
 router.get("/countByType",countByType);
 

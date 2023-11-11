@@ -67,6 +67,16 @@ const countByCity = async (req, res, next) => {
     next(err);
   }
 };
+const getGHByAminity = async (req, res, next) => {
+  const aminity = req.query.aminity;
+
+  try {
+    const guesthouses = await GH.find({ aminities: { $regex: aminity, $options: "i" } });
+    res.status(200).json(guesthouses);
+  } catch (err) {
+    next(err);
+  }
+};
 
 const countByType = async (req, res, next) => {
   try {
@@ -101,5 +111,6 @@ module.exports = {
   getAllGH,
   countByCity,
   countByType,
-  getGHRooms
+  getGHRooms,
+  getGHByAminity,
 };
