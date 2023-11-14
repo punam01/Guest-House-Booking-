@@ -5,11 +5,14 @@ import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 import "../reserve/reserve.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Reserve = ({ setOpen, hotelId }) => {
   const { data, loading, error } = useFetch(`/guesthouses/room/${hotelId}`);
-  console.log(data);
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const [showConfirmation, setShowConfirmation] = useState(false); // New state for confirmation popup
   const { dates } = useContext(SearchContext);
+  const navigate = useNavigate();
 
   const handleSelect = (e, roomNumber) => {
     const checked = e.target.checked;
@@ -56,11 +59,17 @@ const Reserve = ({ setOpen, hotelId }) => {
           return res.data;
         })
       );
-      setOpen(false);
-      //navigate("/");
-    } catch (error) {}
+
+      setShowConfirmation(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
-  console.log(selectedRooms);
+
+  const handleConfirm = async () => {    
+    setShowConfirmation(false);
+  };
+
   return (
     <div className="reserve">
       <div className="rContainer">
@@ -71,7 +80,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         />
         <span>Select your rooms</span>
         {data.map((item) => (
-          <div className="rItem">
+          <div className="rItem" key={item._id}>
             <div className="rItemInfo">
               <div className="rTitle">{item.title}</div>
               <div className="rDesc">{item.desc}</div>
@@ -86,7 +95,7 @@ const Reserve = ({ setOpen, hotelId }) => {
                 <input
                   type="checkbox"
                   value={roomNumber._id}
-                  onChange={handleSelect}
+                  onChange={(e) => handleSelect(e, roomNumber)}
                   disabled={!isAvailable(roomNumber)}
                 />
               </div>
@@ -96,6 +105,15 @@ const Reserve = ({ setOpen, hotelId }) => {
         <button className="rButton" onClick={handleClick}>
           Reserve Now!
         </button>
+
+        {/* Confirmation Popup */}
+        {showConfirmation && (
+          <div className="confirmationPopup">
+            <p>Reservation Confirmed!</p>
+            {/* Display guesthouse and room details */}
+            <button onClick={handleConfirm}>OK</button>
+          </div>
+        )}
       </div>
     </div>
   );

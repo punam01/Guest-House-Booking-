@@ -37,9 +37,12 @@ img{
   object-fit: cover;
 }
 .navButton{
-  margin-left: 20px;
+  background-color: #ADE792;
+  border: 1px solid #344D67;
+  color: white;
+  font-weight: 500;
   border: none;
-  padding: 5px 10px;
+  padding: 10px;
+  margin: 1rem;
   cursor: pointer;
-  color: #003580;
 }

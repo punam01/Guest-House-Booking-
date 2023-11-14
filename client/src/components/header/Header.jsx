@@ -1,12 +1,8 @@
-import React from 'react'
-
+import React from "react";
 import {
   faBed,
   faCalendarDays,
-  faCar,
-  faPerson,
-  faPlane,
-  faTaxi,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
@@ -17,11 +13,12 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = ({ type }) => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
+  const [guesthouseName, setGuesthouseName] = useState("");
   const [dates, setDates] = useState([
     {
       startDate: new Date(),
@@ -29,29 +26,28 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
-  const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1,
-  });
-  const {user} = useContext(AuthContext);
+
+  const guesthouseOptions = [
+    "J.C. Bose Guest House",
+    "Vikram Sarabhai Guest House",
+    "Homi J. Babha Guest House",
+    "C.V. Raman Guest House",
+    "International Hostel",
+  ];
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleOption = (name, operation) => {
-    setOptions((prev) => {
-      return {
-        ...prev,
-        [name]: operation === "i" ? options[name] + 1 : options[name] - 1,
-      };
+  const { dispatch } = useContext(SearchContext);
+
+  const handleSearch = () => {
+    dispatch({
+      type: "NEW_SEARCH",
+      payload: { dates, guesthouseName },
+    });
+    navigate("/guesthouses", {
+      state: { dates, guesthouseName },
     });
   };
-  const {dispatch}=useContext(SearchContext)
-  const handleSearch = () => {
-  dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
-  navigate("/guesthouses", { state: { destination, dates, options } });
-};
-
 
   return (
     <div className="header">
@@ -62,16 +58,22 @@ const Header = ({ type }) => {
       >
         {type !== "list" && (
           <>
-            {user?<button className="headerBtn">LOGOUT</button>:<button className="headerBtn">Sign in / Register</button>}
             <div className="headerSearch">
               <div className="headerSearchItem">
-                <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                <input
-                  type="text"
-                  placeholder="Where are you going?"
+                <FontAwesomeIcon icon={faHome} className="headerIcon" />
+                <select
+                  id="guesthouseName"
                   className="headerSearchInput"
-                  onChange={(e) => setDestination(e.target.value)}
-                />
+                  value={guesthouseName}
+                  onChange={(e) => setGuesthouseName(e.target.value)}
+                >
+                  <option value="">Select Guesthouse</option>
+                  {guesthouseOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
@@ -93,7 +95,7 @@ const Header = ({ type }) => {
                   />
                 )}
               </div>
-              
+
               <div className="headerSearchItem">
                 <button className="headerBtn" onClick={handleSearch}>
                   SEARCH
@@ -108,5 +110,3 @@ const Header = ({ type }) => {
 };
 
 export default React.memo(Header);
-
-

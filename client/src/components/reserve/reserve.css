@@ -62,3 +62,30 @@
 label{
     font-weight: lighter;
 }
+.confirmationPopup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.confirmationPopup p {
+  margin-bottom: 10px;
+}
+
+.confirmationPopup button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.confirmationPopup button:hover {
+  background-color: #0056b3;
+}
