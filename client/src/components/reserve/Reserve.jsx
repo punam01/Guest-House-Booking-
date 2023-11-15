@@ -87,7 +87,7 @@ const Reserve = ({ setOpen, hotelId }) => {
               <div className="rMax">
                 Max People: <b>{item.maxPeople}</b>
               </div>
-              <div className="rPrice">Price: {item.price}</div>
+              <div className="rPrice">Price: ₹{item.price}</div>
             </div>
             {item.roomNumbers.map((roomNumber) => (
               <div className="room" key={roomNumber._id}>

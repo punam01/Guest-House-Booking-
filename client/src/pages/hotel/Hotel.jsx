@@ -16,18 +16,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
 import Reserve from "../../components/reserve/Reserve";
-
+import axios from "axios";
 const Hotel = () => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const id = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
+  const [selectedRooms, setSelectedRooms] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { data, loading, error } = useFetch(`/guesthouses/find/${id}`);
   const { dates, options } = useContext(SearchContext);
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  const [allDates, setAllDates] = useState(/* initial value */);
 
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -49,7 +52,7 @@ const Hotel = () => {
       navigate("/login");
     }
   };
-  
+
   const handleMove = (direction) => {
     let newSlideNumber;
 
@@ -62,6 +65,26 @@ const Hotel = () => {
     setSlideNumber(newSlideNumber);
   };
 
+  //cancel reservation
+
+  const handleCancelReservation = async () => {
+    console.log("cancel");
+    try {
+      await Promise.all(
+        selectedRooms.map((roomID) => {
+          const res = axios.put(`/rooms/availability/${roomID}/cancel`, {
+            dates: allDates,
+          });
+          console.log(res.data);
+          return res.data;
+        })
+      );
+
+      // Optionally, update your component state or perform any other necessary actions
+    } catch (error) {
+      console.error("Error cancelling reservation:", error);
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -110,7 +133,7 @@ const Hotel = () => {
                 Excellent location – {data.distance}m from center
               </span>
               <span className="hotelPriceHighlight">
-                Book a stay over ${data.cheapestPrice} at this property and get
+                Book a stay over ₹{data.cheapestPrice} at this property and get
                 a free airport taxi
               </span>
               <div className="hotelImages">
@@ -139,7 +162,7 @@ const Hotel = () => {
                   <h2>
                     <h2>
                       <b>
-                        $
+                        ₹
                         {days *
                           data.cheapestPrice *
                           (options && options.room ? options.room : 1)}
@@ -155,6 +178,12 @@ const Hotel = () => {
                   </button>
                 </div>
               </div>
+              <button
+                    style={{ backgroundColor: "#ADE792", color: "#344D67" ,cursor:"pointer"}}
+                    onClick={handleCancelReservation}
+                  >
+                    cancel
+                  </button>
             </div>
             <MailList />
             <Footer />

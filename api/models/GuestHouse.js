@@ -3,7 +3,8 @@ const mongoose=require("mongoose");
 const GuestHouseSchema=new mongoose.Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     type:{
         type:String,
@@ -23,6 +24,7 @@ const GuestHouseSchema=new mongoose.Schema({
     },
     photo:{
         type:[String],
+        required:true
     },
     title:{
         type:String,

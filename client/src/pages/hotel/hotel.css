@@ -130,11 +130,18 @@
   justify-content: center;
   align-items: center;
 }
-
+img{
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
 .sliderImg{
   width: 80%;
 
-  background-color: aqua;
   height: 400px;
 }
 

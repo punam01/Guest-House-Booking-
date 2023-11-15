@@ -49,7 +49,21 @@ const updateRoomAvailability = async (req, res, next) => {
   }
 };
 
-
+const cancelRoomReservation = async (req, res, next) => {
+  try {
+    await Room.updateOne(
+      { "roomNumbers._id": req.params.id },
+      {
+        $pull: {
+          "roomNumbers.$.unavailableDates": { $in: req.body.dates },
+        },
+      }
+    );
+    res.status(200).json("Reservation has been cancelled");
+  } catch (err) {
+    next(err);
+  }
+};
 const deleteRoom = async (req, res, next) => {
   const guesthouseId = req.params.hotelId;
   try {
@@ -84,4 +98,4 @@ const getAllRoom = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom,updateRoomAvailability}
+module.exports = { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom,updateRoomAvailability,cancelRoomReservation}

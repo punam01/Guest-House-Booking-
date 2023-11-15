@@ -21,20 +21,22 @@
   justify-content: space-between;
 }
 
-.logo{
+.logoimg{
   position: absolute;
-  top:30px;
+  top:10px;
+  width:50px;
+  height: 50px;
+  border-radius: 50%;
   padding: 10px;
   font-weight: 600;
   line-height: 20px;
-  font-size:x-large; 
-  font-family: 'Poppins', sans-serif;
 }
-img{
-  width:50px;
-  height: 50px;
-  border-radius: 50px;
-  object-fit: cover;
+.logo{
+  position: relative;
+  left:70px;
+  top: 0px;
+  font-family: 'Poppins', sans-serif;
+  font-size: x-large;
 }
 .navButton{
   background-color: #ADE792;

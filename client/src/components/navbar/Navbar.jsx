@@ -10,14 +10,9 @@ const Navbar = () => {
     navigate("/login");
   }
 
-  const handleLogout = async () => {
+  const handleLogout = async (req,res) => {
     try {
-      // Perform any additional logout logic if needed (e.g., contacting the server)
-      
-      // Dispatch the logout action to update the state in AuthContext
       dispatch({ type: "LOGOUT" });
-
-      // Redirect to the home page or login page
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
@@ -34,7 +29,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-          <img src={image} alt="" />
+          <img src={image} alt="" className="logoimg" />
           <span className="logo">NITK GUEST HOUSE</span>
         </Link>
         {user ? (
