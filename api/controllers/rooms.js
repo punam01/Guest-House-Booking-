@@ -1,19 +1,22 @@
 const Room = require("../models/Room");
 const GuestHouse = require("../models/GuestHouse");
-const {createError}=require("../utils/error");
+const { createError } = require("../utils/error");
 
 const createRoom = async (req, res, next) => {
   const guesthouseId = req.params.hotelId;
-  const newRoom=new Room(req.body);
+  if (!guesthouseId) {
+    return res.status(400).json({ success: false, message: "Invalid guesthouseId" });
+  }
+  const newRoom = new Room(req.body);
 
   try {
     const savedRoom = await newRoom.save();
-    try{
-        await GuestHouse.findByIdAndUpdate(guesthouseId,{
-            $push:{rooms:savedRoom._id},
-        });
-    } catch(err){
-        next(err);
+    try {
+      await GuestHouse.findByIdAndUpdate(guesthouseId, {
+        $push: { rooms: savedRoom._id },
+      });
+    } catch (err) {
+      next(err);
     }
     res.status(200).json(savedRoom);
   } catch (err) {
@@ -37,12 +40,13 @@ const updateRoom = async (req, res, next) => {
 const updateRoomAvailability = async (req, res, next) => {
   try {
     await Room.updateOne(
-      {"roomNumbers._id":req.params.id},
+      { "roomNumbers._id": req.params.id },
       {
-      $push:{
-        "roomNumbers.$.unavailableDates":req.body.dates
-      },
-    })
+        $push: {
+          "roomNumbers.$.unavailableDates": req.body.dates,
+        },
+      }
+    );
     res.status(200).json("Room status has been updates");
   } catch (err) {
     next(err);
@@ -67,14 +71,18 @@ const cancelRoomReservation = async (req, res, next) => {
 const deleteRoom = async (req, res, next) => {
   const guesthouseId = req.params.hotelId;
   try {
+    // Find the room and delete it by ID
     await Room.findByIdAndDelete(req.params.id);
-    try{
-        await GuestHouse.findByIdAndUpdate(guesthouseId,{
-            $pull:{rooms:req.params.id},
-        });
-    } catch(err){
-        next(err);
-    }
+
+    // Update the GuestHouse to remove the reference to the deleted room
+    await GuestHouse.findByIdAndUpdate(
+      guesthouseId,
+      {
+        $pull: { rooms: req.params.id },
+      },
+      { new: true }
+    );
+
     res.status(200).json("Room has been deleted");
   } catch (err) {
     next(err);
@@ -98,4 +106,12 @@ const getAllRoom = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { createRoom, updateRoom, deleteRoom, getRoom, getAllRoom,updateRoomAvailability,cancelRoomReservation}
+module.exports = {
+  createRoom,
+  updateRoom,
+  deleteRoom,
+  getRoom,
+  getAllRoom,
+  updateRoomAvailability,
+  cancelRoomReservation,
+};

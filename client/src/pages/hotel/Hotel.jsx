@@ -67,24 +67,6 @@ const Hotel = () => {
 
   //cancel reservation
 
-  const handleCancelReservation = async () => {
-    console.log("cancel");
-    try {
-      await Promise.all(
-        selectedRooms.map((roomID) => {
-          const res = axios.put(`/rooms/availability/${roomID}/cancel`, {
-            dates: allDates,
-          });
-          console.log(res.data);
-          return res.data;
-        })
-      );
-
-      // Optionally, update your component state or perform any other necessary actions
-    } catch (error) {
-      console.error("Error cancelling reservation:", error);
-    }
-  };
   return (
     <div>
       <Navbar />
@@ -178,12 +160,7 @@ const Hotel = () => {
                   </button>
                 </div>
               </div>
-              <button
-                    style={{ backgroundColor: "#ADE792", color: "#344D67" ,cursor:"pointer"}}
-                    onClick={handleCancelReservation}
-                  >
-                    cancel
-                  </button>
+
             </div>
             <MailList />
             <Footer />
