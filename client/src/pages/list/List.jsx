@@ -24,7 +24,7 @@ const List = () => {
         <div className="listWrapper">
           <div className="listResult">
             {loading?"Loading please wait..":
-            <>{data.length > 0 ? (data.map((item)=>(
+            <>{data?.length >= 0? (data.map((item)=>(
                 <SearchItem item={item} key={item._id}/>
             ))):<p>No data available</p>}</>}
           </div>

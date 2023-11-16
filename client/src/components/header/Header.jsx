@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   faBed,
   faCalendarDays,
@@ -26,20 +26,34 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
+  const [guesthouseOptions, setGuesthouseOptions] = useState([]);
 
-  const guesthouseOptions = [
-    "J.C. Bose Guest House",
-    "Vikram Sarabhai Guest House",
-    "Homi J. Babha Guest House",
-    "C.V. Raman Guest House",
-    "International Hostel",
-  ];
+  useEffect(() => {
+    // Fetch guesthouse options from your backend when the component mounts
+    const fetchGuesthouses = async () => {
+      try {
+        const response = await fetch('/guesthouses'); // Replace with your actual backend endpoint
+        const data = await response.json();
+        setGuesthouseOptions(data);
+      } catch (error) {
+        console.error('Error fetching guesthouses:', error);
+      }
+    };
+
+    fetchGuesthouses();
+  }, []);
+  
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { dispatch } = useContext(SearchContext);
 
   const handleSearch = () => {
+    if (dates[0].startDate.toISOString() === dates[0].endDate.toISOString()) {
+      alert("Please select different start and end dates for booking.");
+      return;
+    }
+    console.log(guesthouseName)
     dispatch({
       type: "NEW_SEARCH",
       payload: { dates, guesthouseName },
@@ -69,8 +83,8 @@ const Header = ({ type }) => {
                 >
                   <option value="">Select Guesthouse</option>
                   {guesthouseOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
+                    <option key={option._id} value={option.name}>
+                      {option.name}
                     </option>
                   ))}
                 </select>

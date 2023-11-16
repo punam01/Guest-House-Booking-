@@ -6,20 +6,30 @@ import { SearchContext } from "../../context/SearchContext";
 import "../reserve/reserve.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import EmailForm from "../email/EmailForm";
+import emailjs from 'emailjs-com';
 
-const Reserve = ({ setOpen, hotelId }) => {
+const Reserve = ({ setOpen, hotelId, ghname }) => {
   const { data, loading, error } = useFetch(`/guesthouses/room/${hotelId}`);
   const [selectedRooms, setSelectedRooms] = useState([]);
+  const [selectedRoomNum, setSelectedRoomNum] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false); // New state for confirmation popup
   const { dates } = useContext(SearchContext);
   const navigate = useNavigate();
+  console.log(data);
+  const storedUserInfo = localStorage.getItem('user');
+   const userInfo = JSON.parse(storedUserInfo);
+  const userEmail = userInfo.email;
+  const userName = userInfo.username;
 
   const handleSelect = (e, roomNumber) => {
     const checked = e.target.checked;
     const value = e.target.value;
 
     if (checked) {
+      console.log(roomNumber.number);
       setSelectedRooms([...selectedRooms, value]);
+      setSelectedRoomNum([...selectedRoomNum, roomNumber.number]);
     } else {
       setSelectedRooms(selectedRooms.filter((item) => item !== value));
     }
@@ -59,15 +69,29 @@ const Reserve = ({ setOpen, hotelId }) => {
           return res.data;
         })
       );
+        console.log(ghname);
+      // Send email here
+      const templateParams = {
+        from_name: ghname,
+        from_email: "nitk.ghouse@gmail.com", // Sender's email
+        reply_to: "nitk.ghouse@gmail.com", // Sender's email address for replies
+        to_name: userName,
+        to_email: userEmail, // Receiver's email address
+        message: `User Name: ${userName}\nRoom Numbers: ${selectedRoomNum.join(', ')}\nCheck-In Date: ${dates[0].startDate}\nCheck-Out Date: ${dates[0].endDate}`,
+      };
 
+      await emailjs.send("service_31y1czr", "template_m8hbsxw", templateParams, "wdC4n2WXSceAFkSI-");
+
+      console.log(selectedRooms);
       setShowConfirmation(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const handleConfirm = async () => {    
+  const handleConfirm = async () => {
     setShowConfirmation(false);
+    setOpen(false);
   };
 
   return (
@@ -110,7 +134,7 @@ const Reserve = ({ setOpen, hotelId }) => {
         {showConfirmation && (
           <div className="confirmationPopup">
             <p>Reservation Confirmed!</p>
-            {/* Display guesthouse and room details */}
+            <p>Details have been mailed on your registered email-id</p>
             <button onClick={handleConfirm}>OK</button>
           </div>
         )}

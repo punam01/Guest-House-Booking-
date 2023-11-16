@@ -11,7 +11,7 @@ const Login = () => {
     password: undefined,
   });
   const {loading, error, dispatch } = useContext(AuthContext);
-
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }))
 
@@ -26,7 +26,15 @@ const Login = () => {
       
     } catch (error) {
       dispatch({type:"LOGIN_FAILURE",payload:error.response.data});
+      setShowErrorPopup(true);
+      setTimeout(()=>{
+        setShowErrorPopup(false);
+      },5000)
     }
+  }
+    const closeErrorPopup = () => {
+    // Close the error popup
+    setShowErrorPopup(false);
   }
   return (
     <div className="main-login">
@@ -51,17 +59,26 @@ const Login = () => {
             onChange={handleChange}
           />
           <button
-          disabled={loading}
+            disabled={loading}
             type="submit"
             style={{ width: "18rem", margin: "0" }}
             className="btn"
             onClick={handleClick}
             id="liveAlertBtn"
           >
-            Submit{" "}
+            Submit
           </button>
 
-          {error && <span className="err">{error} </span>}
+          {/* Error popup */}
+          {showErrorPopup && (
+            <div className="err">
+              <span className="close-btn" onClick={closeErrorPopup}>
+                &times;
+              </span>
+              <p>{error.message}</p>
+            </div>
+          )}
+
           <div className="signtxt">
             By signing in or creating an account, you agree with our{" "}
             <span>Terms & conditions</span> and <span>Privacy statement</span>

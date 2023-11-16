@@ -1,5 +1,5 @@
 const express = require("express");
-const {updateUser,deleteUser,getAllUser,getUser} = require("../controllers/users");
+const {updateUser,deleteUser,getAllUser,getUser, makeAdmin, removeAdmin} = require("../controllers/users");
 const {verifyToken,verifyUser,verifyAdmin } = require("../utils/verifyToken");
 
 const router=express.Router();
@@ -29,4 +29,7 @@ router.get("/:id",verifyUser,getUser);
 //GET ALL
 router.get("/",verifyAdmin,getAllUser);
 
+
+router.put('/:userId/make-admin', makeAdmin );
+router.put('/:userId/remove-admin', removeAdmin );
 module.exports = router; 

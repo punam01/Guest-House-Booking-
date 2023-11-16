@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 
-const EmailForm = () => {
-  
-    const [serviceId,setServiceId]=useState("service_31y1czr");
-    const [templateId,setTemplateId]=useState("template_wwfl1bu");
-    const [publicKey,setPublicKey]=useState("wdC4n2WXSceAFkSI-");
-
+const EmailForm = ({ ghname, data, selectedRooms, startDate, endDate }) => {
+  const [serviceId, setServiceId] = useState("service_31y1czr");
+  const [templateId, setTemplateId] = useState("template_m8hbsxw");
+  const [publicKey, setPublicKey] = useState("wdC4n2WXSceAFkSI-");
+  const storedUserInfo = localStorage.getItem('user');
+  const userInfo = JSON.parse(storedUserInfo);
+  const userEmail = userInfo.email;
+  const userName = userInfo.username;
+  console.log(userEmail);
   const [userData, setUserData] = useState({
-    guesthouseName: '',
-    roomNumber: '',
-    price: '',
-    startDate: '',
-    endDate: '',
+    guesthouseName: ghname,
+    roomNumber: selectedRooms,
+    startDate: startDate,
+    endDate: endDate,
+    price: data.price,
   });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
+  console.log(userData);
   const handleSend = () => {
     const templateParams = {
       from_name: userData.guesthouseName,
-      from_email: 'nitk.ghouse@gmail.com', // Sender's email
-      to_name: 'NITK',
-      message: `Room Number: ${userData.roomNumber}\nPrice: ${userData.price}\nStart Date: ${userData.startDate}\nEnd Date: ${userData.endDate}`,
+      from_email: "nitk.ghouse@gmail.com",  // Sender's email
+      reply_to: userEmail, // Sender's email address for replies
+      to_name: userName,
+      to_email: userEmail, // Receiver's email address
+      message: `User Name: ${userName}\nRoom Numbers: ${userData.roomNumber.join(', ')}\nCheck-In Date: ${userData.startDate}\nCheck-Out Date: ${userData.endDate}`,
     };
 
     emailjs.send(serviceId, templateId, templateParams, publicKey)
       .then((response) => {
-        console.log('Email sent:', response);
+        console.log('Email sent to:', response);
       })
       .catch((error) => {
         console.error('Email send error:', error);
@@ -38,66 +38,10 @@ const EmailForm = () => {
   };
 
   return (
-    <div>
-      <label>
-        Guesthouse Name:
-        <input
-          type="text"
-          name="guesthouseName"
-          value={userData.guesthouseName}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-
-      <label>
-        Room Number:
-        <input
-          type="text"
-          name="roomNumber"
-          value={userData.roomNumber}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-
-      <label>
-        Price:
-        <input
-          type="text"
-          name="price"
-          value={userData.price}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-
-      <label>
-        Start Date:
-        <input
-          type="text"
-          name="startDate"
-          value={userData.startDate}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-
-      <label>
-        End Date:
-        <input
-          type="text"
-          name="endDate"
-          value={userData.endDate}
-          onChange={handleInputChange}
-        />
-      </label>
-      <br />
-
-      <button onClick={handleSend}>Send Email</button>
-    </div>
+    <>
+        <button onClick={handleSend}>Send Email</button>
+    </>
   );
 };
 
 export default EmailForm;
-

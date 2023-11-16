@@ -39,4 +39,32 @@ const getAllUser=async(req,res,next)=>{
         next(err);
     }
 }
-module.exports={updateUser,deleteUser,getUser,getAllUser};
+const makeAdmin=async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { isAdmin: true },
+      { new: true }
+    );
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}
+const removeAdmin=async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { isAdmin: false },
+      { new: true }
+    );
+    res.json({ success: true, user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}
+module.exports={updateUser,deleteUser,getUser,getAllUser,makeAdmin,removeAdmin};

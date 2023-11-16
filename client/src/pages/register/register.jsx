@@ -12,7 +12,7 @@ const Register = () => {
     username: "",
     email: "",
     country: "",
-    img: "",
+    img: "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg",
     city: "",
     phone: "",
     password: "",
@@ -111,14 +111,6 @@ const Register = () => {
             className="login-input"
             placeholder="Country"
             value={credentials.country}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            id="img"
-            className="login-input"
-            placeholder="Profile Image URL"
-            value={credentials.img}
             onChange={handleChange}
           />
           <input

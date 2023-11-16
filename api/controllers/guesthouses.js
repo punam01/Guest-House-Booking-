@@ -23,7 +23,14 @@ const updateGH = async (req, res, next) => {
     next(err);
   }
 };
-
+const getGHNames=async (req, res, next) => {
+  try {
+    const guesthouses = await GH.find({}, 'name'); 
+    res.status(200).json(guesthouses);
+  } catch (err) {
+    next(err);
+  }
+};
 const deleteGH = async (req, res, next) => {
   try {
     await GH.findByIdAndDelete(req.params.id);
@@ -113,4 +120,5 @@ module.exports = {
   countByType,
   getGHRooms,
   getGHByAminity,
+  getGHNames
 };

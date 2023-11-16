@@ -23,14 +23,12 @@ const Hotel = () => {
   const navigate = useNavigate();
   const id = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
-  const [selectedRooms, setSelectedRooms] = useState([]);
 
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { data, loading, error } = useFetch(`/guesthouses/find/${id}`);
   const { dates, options } = useContext(SearchContext);
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  const [allDates, setAllDates] = useState(/* initial value */);
 
   function dayDifference(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime());
@@ -145,7 +143,7 @@ const Hotel = () => {
                     <h2>
                       <b>
                         ₹
-                        {days *
+                        {days?days:1 *
                           data.cheapestPrice *
                           (options && options.room ? options.room : 1)}
                       </b>{" "}
@@ -163,11 +161,10 @@ const Hotel = () => {
 
             </div>
             <MailList />
-            <Footer />
           </div>
         </>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} ghname={data.name}/>}
     </div>
   );
 };

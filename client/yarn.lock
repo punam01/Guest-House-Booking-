@@ -1133,6 +1133,11 @@
   dependencies:
     postcss-value-parser "^4.2.0"
 
+"@emailjs/browser@^3.11.0":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@emailjs/browser/-/browser-3.11.0.tgz#0e78de2f85096d1a9ad5b5977b060bb5d1784cb4"
+  integrity sha512-RkY3FKZ3fPdK++OeF46mRTFpmmQWCHUVHZH209P3NE4D5sg2Atg7S2wa3gw5062Gl4clt4Wn5SyC4WhlVZC5pA==
+
 "@eslint/eslintrc@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.1.tgz#8b5e1c49f4077235516bc9ec7d41378c0f69b8c6"
@@ -3674,6 +3679,11 @@ electron-to-chromium@^1.4.84:
   version "1.4.114"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.114.tgz#d85ec0808dd50b0cf6e6b262480ffd385f71c873"
   integrity sha512-gRwLpVYWHGbERPU6o8pKfR168V6enWEXzZc6zQNNXbgJ7UJna+9qzAIHY94+9KOv71D/CH+QebLA9pChD2q8zA==
+
+emailjs-com@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/emailjs-com/-/emailjs-com-3.2.0.tgz#a53cb22f1bc433c701c84c53d8b56eefd5ce7111"
+  integrity sha512-Prbz3E1usiAwGjMNYRv6EsJ5c373cX7/AGnZQwOfrpNJrygQJ15+E9OOq4pU8yC977Z5xMetRfc3WmDX6RcjAA==
 
 emittery@^0.8.1:
   version "0.8.1"
